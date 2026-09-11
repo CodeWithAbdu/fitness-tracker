@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FitLog</title>
+  <meta name="theme-color" content="#0f1115">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FitLog">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>FitLog</h1>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="field-row">
+        <label for="sessionDate">Date</label>
+        <input type="date" id="sessionDate">
+      </div>
+      <div class="field-block">
+        <label>Muscles</label>
+        <div id="muscleChips" class="chip-group"></div>
+      </div>
+    </section>
+
+    <form id="addExerciseForm" class="card">
+      <div class="field-row">
+        <label for="exercise">Exercise</label>
+        <select id="exercise" disabled required>
+          <option value="" disabled selected>Select muscles first</option>
+        </select>
+      </div>
+      <input type="text" id="otherExercise" placeholder="Exercise name" hidden>
+
+      <div class="field-block">
+        <label>Sets</label>
+        <div id="setCountChips" class="chip-group"></div>
+      </div>
+      <div id="setsList" class="sets-list"></div>
+
+      <div class="field-block">
+        <label>Next time</label>
+        <div id="progressionChips" class="chip-group"></div>
+      </div>
+
+      <button type="submit" class="btn-primary">Add exercise to session</button>
+    </form>
+
+    <section id="stagedExercises" class="staged-list"></section>
+
+    <button id="saveSession" class="btn-save" disabled>Save session</button>
+    <p id="status" class="status"></p>
+
+    <details class="card">
+      <summary>Manage exercises</summary>
+      <div class="field-row">
+        <label for="manageMuscle">Muscle</label>
+        <select id="manageMuscle"></select>
+      </div>
+      <ul id="manageExerciseList" class="manage-list"></ul>
+      <div class="field-row">
+        <input type="text" id="newExerciseName" placeholder="New exercise name">
+        <button type="button" id="addExerciseBtn" class="btn-secondary">Add</button>
+      </div>
+    </details>
+
+    <section class="history">
+      <h2>History</h2>
+      <div id="historyList"></div>
+    </section>
+  </main>
+
+  <script src="exercises.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
