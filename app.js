@@ -183,8 +183,25 @@ function addSetRow(prefill) {
     row.querySelector(".reps").value = prefill.reps;
     row.querySelector(".weight").value = prefill.weight;
   }
+  row.querySelector(".weight").addEventListener("input", () => handleWeightInput(row));
   $("#setsList").appendChild(row);
   renumberSets();
+}
+
+// Typing a weight in set #1 fills the same weight into the other sets,
+// unless that set's weight was already typed by hand (then it's left alone).
+function handleWeightInput(row) {
+  const rows = [...$("#setsList").querySelectorAll(".set-row")];
+  if (rows[0] !== row) {
+    row.dataset.weightDirty = "true";
+    return;
+  }
+  const value = row.querySelector(".weight").value;
+  rows.slice(1).forEach((r) => {
+    if (r.dataset.weightDirty !== "true") {
+      r.querySelector(".weight").value = value;
+    }
+  });
 }
 
 function renumberSets() {
