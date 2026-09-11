@@ -171,17 +171,32 @@ function buildSetRows(count) {
   }
 }
 
+const REPS_MIN = 1;
+const REPS_MAX = 15;
+const REPS_DEFAULT = 8;
+
 function addSetRow(prefill) {
   const row = document.createElement("div");
   row.className = "set-row";
   row.innerHTML = `
-    <span class="set-index"></span>
-    <input type="number" inputmode="decimal" class="weight" placeholder="Weight (kg)" min="0" step="0.5" required>
-    <input type="number" inputmode="numeric" class="reps" placeholder="Reps" min="0" required>
+    <div class="set-row-top">
+      <span class="set-index"></span>
+      <input type="number" inputmode="decimal" class="weight" placeholder="Weight (kg)" min="0" step="0.5" required>
+    </div>
+    <div class="reps-slider-row">
+      <input type="range" class="reps" min="${REPS_MIN}" max="${REPS_MAX}" step="1" value="${REPS_DEFAULT}">
+      <span class="reps-value">${REPS_DEFAULT} reps</span>
+    </div>
   `;
+  const repsInput = row.querySelector(".reps");
+  const repsValue = row.querySelector(".reps-value");
+  repsInput.addEventListener("input", () => {
+    repsValue.textContent = `${repsInput.value} reps`;
+  });
   if (prefill) {
-    row.querySelector(".reps").value = prefill.reps;
     row.querySelector(".weight").value = prefill.weight;
+    repsInput.value = prefill.reps || REPS_DEFAULT;
+    repsValue.textContent = `${repsInput.value} reps`;
   }
   row.querySelector(".weight").addEventListener("input", () => handleWeightInput(row));
   $("#setsList").appendChild(row);

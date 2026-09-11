@@ -1,4 +1,4 @@
-const CACHE = "fitlog-v2";
+const CACHE = "fitlog-v4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -11,7 +11,12 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)));
+  // fetch with cache: "reload" so the browser's HTTP cache can't hand back stale assets
+  e.waitUntil(
+    caches.open(CACHE).then((c) =>
+      Promise.all(ASSETS.map((url) => fetch(url, { cache: "reload" }).then((res) => c.put(url, res))))
+    )
+  );
   self.skipWaiting();
 });
 
